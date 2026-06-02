@@ -4,7 +4,7 @@ import java.io.File;
 
 public abstract class FileDialogBase extends JDialog {
     protected JTextField titleField = new JTextField(20);
-    protected JTextField authorField = new JTextField(20);
+    protected JTextField artistField = new JTextField(20);
 
     protected JButton okButton = new JButton("OK");
     protected JButton cancelButton = new JButton("Cancel");
@@ -20,8 +20,8 @@ public abstract class FileDialogBase extends JDialog {
         inputPanel.add(new JLabel("Title:"));
         inputPanel.add(titleField);
 
-        inputPanel.add(new JLabel("Author:"));
-        inputPanel.add(authorField);
+        inputPanel.add(new JLabel("Artist:"));
+        inputPanel.add(artistField);
 
 
         okButton.addActionListener(e -> {
@@ -68,8 +68,8 @@ public abstract class FileDialogBase extends JDialog {
         return titleField.getText();
     }
 
-    public String getAuthor() {
-        return authorField.getText();
+    public String getArtist() {
+        return artistField.getText();
     }
 
 }

@@ -11,6 +11,11 @@ public class AddFileDialog extends FileDialogBase {
 
     @Override
     public void onConfirm() {
-        System.out.println(file + getAuthor() + getTitle());
+        String title = getTitle();
+        String artist = getArtist();
+        int duration = 0;
+        String path = file.getPath();
+
+        Song s = new Song(path, title, artist, duration);
     }
 }
