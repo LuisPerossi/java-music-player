@@ -16,6 +16,6 @@ public class AddFileDialog extends FileDialogBase {
         int duration = 0;
         String path = file.getPath();
 
-        Song s = new Song(path, title, artist, duration);
+        //Song s = new Song(path, title, artist, duration);
     }
 }
