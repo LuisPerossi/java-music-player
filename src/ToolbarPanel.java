@@ -8,9 +8,13 @@ public class ToolbarPanel extends JPanel {
     protected JButton editFileButton = new JButton("Edit File");
     protected JButton removeFileButton = new JButton("Remove File");
 
-    protected FileDialogBase dialog;
+    protected AudioDialog dialog;
 
-    public ToolbarPanel() {
+    private PlaylistPanel playlistPanel;
+
+    public ToolbarPanel(PlaylistPanel playlistPanel) {
+        this.playlistPanel = playlistPanel;
+
         setLayout(new FlowLayout(FlowLayout.LEFT));
         //setBorder(BorderFactory.createTitledBorder("Toolbar Panel"));
 
@@ -28,8 +32,14 @@ public class ToolbarPanel extends JPanel {
 
             if (file == null) { return; }
 
-            dialog = new AddFileDialog(null, file);
+            JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
+            dialog = new AudioDialog(parent, file);
             dialog.open();
+
+            if (dialog.isConfirmed()) {
+                AudioPlayer.getInstance().addAudio(dialog.getAudio());
+                playlistPanel.refresh();
+            }
         });
 
         add(addFileButton);

@@ -1,16 +1,16 @@
 public class Song extends Audio {
-    String genre;
-    public Song(String title, String author, String path, String duration) {
+    private String genre;
+
+    public Song(String title, String author, String path, int duration, String genre) {
         super(title, author, path, duration);
+        this.genre = genre;
     }
 
-    public String getGenre(){
-        return(genre);
-    }
+    public String getGenre(){ return genre; }
 
     @Override
     public String getDisplayName(){
-        return(title + " - " + author);
+        return("[Song] " + title + " - " + author);
     }
 
     @Override

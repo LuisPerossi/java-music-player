@@ -1,11 +1,113 @@
 import javax.swing.*;
+import java.awt.*;
+import java.io.File;
 
 public class AudioDialog extends JDialog{
-    protected JTextField fileField = new JTextField(20);
-    protected JTextField authorField = new JTextField(20);
-    protected JTextField typeField = new JTextField(20);
-    protected JTextField extraField = new JTextField(20);
+    private JTextField titleField = new JTextField(20);
+    private JTextField authorField = new JTextField(20);
 
-    protected JButton okButton = new JButton("Ok");
-    protected JButton cancelButton = new JButton("Cancel");
+    private String[] options = { "Song", "Podcast" };
+    private JComboBox<String> typeField = new JComboBox<>(options);
+
+    private JLabel extraLabel = new JLabel("Genre:");
+    private JTextField extraField = new JTextField();
+
+    private JButton okButton = new JButton("Ok");
+    private JButton cancelButton = new JButton("Cancel");
+
+    private boolean confirmed = false;
+    private File file;
+
+    private Audio audio;
+
+    public AudioDialog(JFrame parent, File file) {
+        super(parent, "Audio Information", true);
+        this.file = file;
+
+        JPanel form = new JPanel();
+        form.setLayout(new GridLayout(0, 2, 5, 5));
+
+        form.add(new JLabel("Title:"));
+        form.add(titleField);
+
+        form.add(new JLabel("Author:"));
+        form.add(authorField);
+
+        form.add(new JLabel("Type:"));
+        form.add(typeField);
+
+        form.add(extraLabel);
+        form.add(extraField);
+
+        typeField.addActionListener(e -> {
+            if (typeField.getSelectedItem().equals("Song")) {
+                extraLabel.setText("Genre:");
+            } else {
+                extraLabel.setText("Episode:");
+            }
+        });
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout());
+
+        buttons.add(okButton);
+        buttons.add(cancelButton);
+
+        okButton.addActionListener(e -> {
+            String title = titleField.getText();
+            String author = authorField.getText();
+            String path = file.getAbsolutePath();
+            String extra = extraField.getText();
+
+            if (title.trim().isEmpty() || author.trim().isEmpty() || extra.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill in all fields!");
+                return;
+            }
+
+            if (typeField.getSelectedItem().equals("Song")) {
+                String genre = extraField.getText();
+
+                audio = new Song(title, author, path, 0, genre);
+            } else {
+                try {
+                    int episodeNumber = Integer.parseInt(extraField.getText());
+                    audio = new Podcast(title, author, path, 0, episodeNumber);
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(this, "Episode must be a number!");
+                    return;
+                }
+            }
+
+            confirmed = true;
+            dispose();
+        });
+
+        cancelButton.addActionListener(e -> {
+            confirmed = false;
+            dispose();
+        });
+
+        JPanel wrapper = new JPanel();
+        wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
+
+        wrapper.add(form);
+        wrapper.add(buttons);
+
+        setResizable(false);
+        setContentPane(wrapper);
+        pack();
+        setLocationRelativeTo(parent);
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public Audio getAudio() {
+        return audio;
+    }
+
+    public void open() {
+        setVisible(true);
+    }
 }
