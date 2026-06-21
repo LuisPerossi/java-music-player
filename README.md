@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Java Music Player - README</h1>
+  <h1>Java Audio Player - README</h1>
   <img width="150" height="150" alt="ChatGPT Image Jun 21, 2026, 03_05_28 PM-jukebox-bg-removed" src="https://github.com/user-attachments/assets/8cdbde52-cd96-48e2-a6f7-68da97394c73" />
 </div>
 
@@ -20,7 +20,7 @@
 - [Screenshots](#screenshots)
 
 ## About the project
-The Java Music Player system was originally developed and design for a project for the <i>Computer Programming 1 Subject</i> with the aim of developing a simple system that can manage local Musics and Podcasts archives (.WAV).
+The Java Music Player system was originally developed and design for a project for the <i>Computer Programming 1 Subject</i> with the aim of developing a simple system that can manage local Music and Podcast archives (.WAV).
 
 ## Features
 - Add and remove your musics
@@ -31,8 +31,8 @@ The Java Music Player system was originally developed and design for a project f
 ## Installation
 Clone this repository:
    ```bash
-   git clone https://github.com/LuisPassoca/simple-stock-manager.git
-   cd simple-stock-manager
+   git clone https://github.com/LuisPerossi/java-audio-player.git
+   cd java-audio-player
    ```
 OR you can Download and Unzip the project from the project right above the README on the ```Code``` button
 <img width="517" height="401" alt="image" src="https://github.com/user-attachments/assets/157941c3-fc24-4f3c-9ad2-5fdff52d1e98" />
