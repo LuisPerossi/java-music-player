@@ -38,6 +38,10 @@ public final class AudioPlayer {
 
     public void playCurrent() {
         if (currentAudio != null) {
+            for (Audio a : playlist) {
+                a.stop();
+            }
+
             currentAudio.play();
         }
     }
