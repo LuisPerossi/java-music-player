@@ -1,12 +1,16 @@
 public class Podcast extends Audio {
     private int episodeNumber;
 
-    public Podcast(String title, String author, String path, int duration, int episodeNumber) {
-        super(title, author, path, duration);
+    public Podcast(String title, String author, String path, int episodeNumber) {
+        super(title, author, path);
         this.episodeNumber = episodeNumber;
     }
 
     public int getEpisodeNumber() { return episodeNumber; }
+
+    public void setEpisodeNumber(int episodeNumber) {
+        this.episodeNumber = episodeNumber;
+    }
 
     @Override
     public String getDisplayName() {

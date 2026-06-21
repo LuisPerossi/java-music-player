@@ -9,9 +9,31 @@ public class ControlsPanel extends JPanel {
     protected JSlider timeSlider = new JSlider();
     protected JLabel songTime = new JLabel("00:00/00:00");
 
-    public ControlsPanel() {
+    private PlaylistPanel playlistPanel;
+
+    public ControlsPanel(PlaylistPanel playlistPanel) {
+        this.playlistPanel = playlistPanel;
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         //setBorder(BorderFactory.createTitledBorder("Controls Panel"));
+
+        playButton.addActionListener(e -> {
+            AudioPlayer.getInstance().playCurrent();
+        });
+
+        pauseButton.addActionListener(e -> {
+            AudioPlayer.getInstance().pauseCurrent();
+        });
+
+        previousButton.addActionListener(e -> {
+            AudioPlayer.getInstance().previous();
+            playlistPanel.selectAudio(AudioPlayer.getInstance().getCurrentAudio());
+        });
+
+        nextButton.addActionListener(e -> {
+            AudioPlayer.getInstance().next();
+            playlistPanel.selectAudio(AudioPlayer.getInstance().getCurrentAudio());
+        });
 
         JPanel topPanel = new JPanel();
         topPanel.add(previousButton);
@@ -25,6 +47,7 @@ public class ControlsPanel extends JPanel {
         timeSlider.setValue(0);
 
         add(topPanel);
-        add(bottomPanel);
+        //slider e contador de tempo não foram implementados
+        //add(bottomPanel);
     }
 }

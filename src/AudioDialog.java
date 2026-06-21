@@ -19,6 +19,7 @@ public class AudioDialog extends JDialog{
     private File file;
 
     private Audio audio;
+    private Audio editingAudio;
 
     public AudioDialog(JFrame parent, File file) {
         super(parent, "Audio Information", true);
@@ -67,11 +68,11 @@ public class AudioDialog extends JDialog{
             if (typeField.getSelectedItem().equals("Song")) {
                 String genre = extraField.getText();
 
-                audio = new Song(title, author, path, 0, genre);
+                audio = new Song(title, author, path, genre);
             } else {
                 try {
                     int episodeNumber = Integer.parseInt(extraField.getText());
-                    audio = new Podcast(title, author, path, 0, episodeNumber);
+                    audio = new Podcast(title, author, path, episodeNumber);
                 } catch (Exception err) {
                     JOptionPane.showMessageDialog(this, "Episode must be a number!");
                     return;
@@ -98,6 +99,94 @@ public class AudioDialog extends JDialog{
         pack();
         setLocationRelativeTo(parent);
     }
+
+    //construtor para edições
+    public AudioDialog(JFrame parent, Audio audio) {
+        super(parent, "Audio Information", true);
+        this.audio = audio;
+
+        JPanel form = new JPanel();
+        form.setLayout(new GridLayout(0, 2, 5, 5));
+
+        form.add(new JLabel("Title:"));
+        form.add(titleField);
+        titleField.setText(audio.getTitle());
+
+        form.add(new JLabel("Author:"));
+        form.add(authorField);
+        authorField.setText(audio.getAuthor());
+
+        form.add(new JLabel("Type:"));
+        form.add(typeField);
+        typeField.setSelectedItem(audio.getType());
+
+        form.add(extraLabel);
+        form.add(extraField);
+
+        if (audio instanceof Song) {
+            extraLabel.setText("Genre:");
+            extraField.setText(((Song) audio).getGenre());
+        } else if (audio instanceof Podcast) {
+            extraLabel.setText("Episode:");
+            extraField.setText(String.valueOf(((Podcast) audio).getEpisodeNumber()));
+        }
+
+        typeField.setEnabled(false);
+
+        JPanel buttons = new JPanel();
+        buttons.setLayout(new FlowLayout());
+
+        buttons.add(okButton);
+        buttons.add(cancelButton);
+
+        okButton.addActionListener(e -> {
+            String title = titleField.getText();
+            String author = authorField.getText();
+            String extra = extraField.getText();
+
+            if (title.trim().isEmpty() || author.trim().isEmpty() || extra.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill in all fields!");
+                return;
+            }
+
+            audio.setTitle(title);
+            audio.setAuthor(author);
+
+            if (audio instanceof Song) {
+                String genre = extraField.getText();
+                ((Song) audio).setGenre(genre);
+            } else if (audio instanceof Podcast) {
+                try {
+                    int episodeNumber = Integer.parseInt(extraField.getText());
+                    ((Podcast) audio).setEpisodeNumber(episodeNumber);
+                } catch (Exception err) {
+                    JOptionPane.showMessageDialog(this, "Episode must be a number!");
+                    return;
+                }
+            }
+
+            AudioPlayer.getInstance().savePlaylist();
+            confirmed = true;
+            dispose();
+        });
+
+        cancelButton.addActionListener(e -> {
+            confirmed = false;
+            dispose();
+        });
+
+        JPanel wrapper = new JPanel();
+        wrapper.setLayout(new BoxLayout(wrapper, BoxLayout.Y_AXIS));
+
+        wrapper.add(form);
+        wrapper.add(buttons);
+
+        setResizable(false);
+        setContentPane(wrapper);
+        pack();
+        setLocationRelativeTo(parent);
+    }
+
 
     public boolean isConfirmed() {
         return confirmed;

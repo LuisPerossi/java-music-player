@@ -3,7 +3,7 @@ import javax.swing.*;
 public class PlayerFrame extends JFrame {
     public PlayerFrame() {
         setTitle("Music Player");
-        setSize(400, 500);
+        setSize(500, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
