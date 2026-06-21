@@ -9,7 +9,7 @@ public class InformationPanel extends JPanel {
     private JLabel extraLabel = new JLabel("Extra:");
 
     public InformationPanel() {
-        setBorder(BorderFactory.createTitledBorder("Song Info"));
+        setBorder(BorderFactory.createTitledBorder("Audio Info"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setPreferredSize(new Dimension(140, 0));
 

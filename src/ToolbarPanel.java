@@ -27,8 +27,8 @@ public class ToolbarPanel extends JPanel {
             JFileChooser chooser = new JFileChooser();
             chooser.setFileFilter(
                 new FileNameExtensionFilter(
-                        "Audio Files (*.mp3, *.wav)",
-                        "mp3", "wav"
+                        "Audio Files (*.wav)",
+                        "wav"
                 )
             );
 
@@ -91,7 +91,6 @@ public class ToolbarPanel extends JPanel {
 
         searchButton.addActionListener(e -> {
             String search = searchField.getText().trim().toLowerCase();
-            if (search.isEmpty()) { return; }
 
             AudioPlayer.getInstance().setCurrentAudio(null);
             playlistPanel.refresh(search);
